@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akani Construction AI Assistant</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b1724;
+      color: #f2f7fa;
+    }
+    header {
+      background: #13283a;
+      padding: 28px 20px;
+      text-align: center;
+      border-bottom: 3px solid #40c99b;
+    }
+    header h1 { margin: 0 0 10px; }
+    header p { color: #b9cbd7; }
+    main { max-width: 1050px; margin: auto; padding: 25px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 15px;
+    }
+    .card, .panel {
+      background: #14293b;
+      border: 1px solid #2a4758;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card h3 { color: #5de0b3; }
+    button {
+      background: #40c99b;
+      color: #081c1a;
+      border: none;
+      border-radius: 7px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: #8df0cc; }
+    .panel { margin-top: 25px; }
+    textarea, select {
+      width: 100%;
+      padding: 13px;
+      margin: 10px 0;
+      border-radius: 7px;
+      border: 1px solid #456075;
+      background: #0d1e2e;
+      color: white;
+      font: inherit;
+    }
+    textarea { min-height: 130px; resize: vertical; }
+    #output {
+      background: #091a29;
+      padding: 18px;
+      border-radius: 8px;
+      min-height: 90px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      margin-top: 15px;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #a4bac7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Akani Construction AI Assistant</h1>
+    <p>Smart Workplace Productivity for Civil Engineering</p>
+    <p>CAPACITI AI Skills Acceleration Project</p>
+  </header>
+
+  <main>
+    <h2>Workplace Productivity Tools</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Email Assistant</h3>
+        <p>Draft professional construction emails.</p>
+        <button onclick="choose('email')">Open Tool</button>
+      </div>
+      <div class="card">
+        <h3>Meeting Summariser</h3>
+        <p>Organise meeting notes and action items.</p>
+        <button onclick="choose('meeting')">Open Tool</button>
+      </div>
+      <div class="card">
+        <h3>Task Planner</h3>
+        <p>Prepare construction task plans.</p>
+        <button onclick="choose('tasks')">Open Tool</button>
+      </div>
+      <div class="card">
+        <h3>Research Assistant</h3>
+        <p>Prepare civil engineering research prompts.</p>
+        <button onclick="choose('research')">Open Tool</button>
+      </div>
+    </div>
+
+    <section class="panel">
+      <h2>Assistant Workspace</h2>
+      <label for="tool">Choose a tool</label>
+      <select id="tool">
+        <option value="email">Email Assistant</option>
+        <option value="meeting">Meeting Summariser</option>
+        <option value="tasks">Task Planner</option>
+        <option value="research">Research Assistant</option>
+      </select>
+
+      <label for="request">Enter your request or notes</label>
+      <textarea id="request"
+        placeholder="Example: Request a material delivery for a bricklaying project"></textarea>
+
+      <button onclick="generate()">Generate Draft</button>
+      <button onclick="copyResult()">Copy Result</button>
+
+      <div id="output" aria-live="polite">
+        Your generated draft will appear here.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Responsible AI Use</h2>
+      <p>
+        This prototype creates structured drafts and AI-ready prompts.
+        It does not call a live AI model yet.
+        Verify all information before using it professionally.
+        Do not enter confidential client or employee information.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Created by Akani Success Kubayi | 2026
+  </footer>
+
+  <script>
+    const tool = document.getElementById("tool");
+    const request = document.getElementById("request");
+    const output = document.getElementById("output");
+
+    function choose(value) {
+      tool.value = value;
+      request.focus();
+      document.querySelector(".panel").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    function generate() {
+      const text = request.value.trim();
+      if (!text) {
+        output.textContent = "Please enter your request first.";
+        return;
+      }
+
+      const templates = {
+        email:
+          "Subject: Construction Project Communication\n\n" +
+          "Dear Team,\n\n" +
+          "I am writing regarding the following matter:\n" +
+          text +
+          "\n\nPlease review and advise on the next steps." +
+          "\n\nKind regards,\nAkani Success Kubayi",
+
+        meeting:
+          "MEETING NOTES - DRAFT\n\n" +
+          "Original notes:\n" + text +
+          "\n\nItems to confirm:\n" +
+          "- Main decisions\n" +
+          "- Responsible persons\n" +
+          "- Action deadlines\n\n" +
+          "Review the notes before preparing a final summary.",
+
+        tasks:
+          "CONSTRUCTION TASK PLAN - DRAFT\n\n" +
+          "Project request:\n" + text +
+          "\n\nSuggested planning checklist:\n" +
+          "1. Confirm project scope\n" +
+          "2. Identify required materials\n" +
+          "3. Assign workers and responsibilities\n" +
+          "4. Review site safety requirements\n" +
+          "5. Establish work schedule\n" +
+          "6. Inspect completed work",
+
+        research:
+          "CIVIL ENGINEERING RESEARCH PROMPT\n\n" +
+          "Research topic:\n" + text +
+          "\n\nInvestigate:\n" +
+          "1. Relevant construction principles\n" +
+          "2. Applicable South African standards\n" +
+          "3. Safety considerations\n" +
+          "4. Practical examples\n" +
+          "5. Reliable reference sources\n\n" +
+          "Verify standards using authoritative sources."
+      };
+
+      output.textContent = templates[tool.value];
+    }
+
+    async function copyResult() {
+      try {
+        await navigator.clipboard.writeText(output.textContent);
+        alert("Result copied!");
+      } catch {
+        alert("Please select and copy the result manually.");
+      }
+    }
+  </script>
+</body>
+</html>
